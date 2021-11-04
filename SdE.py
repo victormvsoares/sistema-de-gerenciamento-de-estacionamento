@@ -1,40 +1,98 @@
-from tkinter import *
+def criar_vaga(vagas,nvagas):
 
-def registra_vaga():
+    vaga = []
+    vaga.append(nvagas)
+    vaga.append(0)
+    vagas.append(vaga)
 
-    pass
+    print(f"\nvagas {nvagas} criada\n")
 
-def visualisar_vagas():
+def visualisar_vagas(vagas,nvagas):
 
-    pass
+    print("")
+    for i in range(0,nvagas):
 
-def historico():
+        if vagas[i][1] == 0:
 
-    pass
+            print(f"vaga {i} desocupada")
 
-def iniciar_dia():
+        else:
 
-    pass
+            print(f"vaga {i} cupada pelo carro {vagas[i][2]}")
+    print("")
+
+def entrada_de_carro(vagas,nvagas,historico,ncarro):
+
+    marca = input("\ndigite a marca do carro : ")
+    modelo = input("digite o modelo do carro : ")
+    cor = input("digite a cor do carro : ")
+    placa = input("digite a placa : ")
+    hora = input("digite a hora de entrada : ")
+    print("")
+    visualisar_vagas(vagas,nvagas)
+    vaga = int(input("\ndigite em que vaga ele ira estacioner : "))
+    print("")
+
+    carro = [marca,modelo,cor,placa,vaga,hora]
+    historico.append(carro)
+    vagas[vaga].append(ncarro)
+
+    vagas[vaga][1]=1
+
+def saida_de_carro(vagas,nvagas,historico):
+
+    hora = input("\ndigite a hora de saida : ")
+    visualisar_vagas(vagas,nvagas)
+    carro = int(input("digite qual carro estar saindo : "))
+    vaga = int(input("digite de que vaga ele estar saindo : "))
+    print("")
+
+    historico[carro].append(hora)
+
+    vagas[vaga][1]=0
+
+def visualisar_historico(historico):
+
+    for i in range(0,len(historico)):
+
+        print(f"\no carro de marca {historico[i][0]} modelo {historico[i][1]} cor {historico[i][2]}\n e placa {historico[i][3]} entrou na vaga {historico[i][4]} as {historico[i][5]} horas e saiu as {historico[i][6]} horas\n")
 
 def main():
 
-    janela = Tk()
-    janela.title("Sistema de Gerenciamento de Estacionamento")
+    vagas = []
+    historico = []
+    nvagas = 0
+    ncarro = 0
 
-    botao1 = Button(janela, text="Registra vaga", command= registra_vaga)
-    botao1.grid(column=0, row=0)
+    while True:
 
-    botao2 = Button(janela, text="Visualisa vagas", command= visualisar_vagas)
-    botao2.grid(column=1, row=0)
+        print("criar vaga-----------[0]")
+        print("visualisar vagas-----[1]")
+        print("entrada de carro-----[2]")
+        print("saida de carro-------[3]")
+        print("visualisar historico-[4]")
+        op = int(input("\ndigite uma opção : "))
 
-    botao3 = Button(janela, text="Historico", command= historico)
-    botao3.grid(column=2, row=0)
+        if op == 0:
+            
+            criar_vaga(vagas,nvagas)
+            nvagas+=1
+        
+        elif op == 1:
 
-    botao4 = Button(janela, text="Iniciar o dia", command= iniciar_dia)
-    botao4.grid(column=3, row=0)
+            visualisar_vagas(vagas,nvagas)
 
-    texto = Label(janela, text="Bem vindo ao Sistema de Gerenciamento de Estacionamento",)
-    texto.grid(column=1, row=1)
+        elif op == 2:
 
-    janela.mainloop()
+            entrada_de_carro(vagas,nvagas,historico,ncarro)
+            ncarro+=1
+
+        elif op == 3:
+
+            saida_de_carro(vagas,nvagas,historico)
+
+        elif op == 4:
+
+            visualisar_historico(historico)
+
 main()
